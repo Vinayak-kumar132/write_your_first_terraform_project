@@ -7,6 +7,16 @@ terraform {
   }
 
   required_version = ">= 1.2.0"            //version of terraform required
+
+ //This is where you want to configure the remote backend so that Terraform stores the state file in S3 and uses DynamoDB for state locking.
+
+ backend "s3" {
+    bucket         = "YOUR_BUCKET_NAME"          # Replace with the name of the S3 bucket created in `remote_state`
+    key            = "local_state/terraform.tfstate"  # Path to the state file in the bucket
+    region         = "us-west-2"                # Replace with the region of your S3 bucket
+    encrypt        = true
+    dynamodb_table = "terraform-lock"           # Replace with the name of your DynamoDB table
+  }
 }
 
 provider "aws" {                            // if you dont use it is fine ..not a mandatory block
