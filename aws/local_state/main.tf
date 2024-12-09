@@ -25,6 +25,10 @@ resource "aws_instance" "app_server" {
   }
 }
 
+output "ec2-public-ips" {
+        value = aws_instance.app_server.public_ip
+}
+
 resource "aws_lb" "test" {
   name               = "test-lb-tf"
   internal           = false
